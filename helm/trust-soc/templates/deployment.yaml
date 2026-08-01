@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: { name: {{ .Release.Name }}-api }
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector: { matchLabels: { app: trustsoc-api } }
+  template:
+    metadata: { labels: { app: trustsoc-api } }
+    spec:
+      securityContext: { runAsNonRoot: true, seccompProfile: { type: RuntimeDefault } }
+      containers:
+        - name: api
+          image: {{ .Values.image.api }}
+          ports: [{ containerPort: 8000 }]
+          envFrom: [{ secretRef: { name: {{ .Release.Name }}-secrets } }]
+          readinessProbe: { httpGet: { path: /health/ready, port: 8000 }, initialDelaySeconds: 10 }
+          livenessProbe: { httpGet: { path: /health/live, port: 8000 }, initialDelaySeconds: 20 }
+          resources: {{- toYaml .Values.resources.api | nindent 12 }}
+          securityContext: { allowPrivilegeEscalation: false, readOnlyRootFilesystem: true, capabilities: { drop: ["ALL"] } }
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: { name: {{ .Release.Name }}-web }
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector: { matchLabels: { app: trustsoc-web } }
+  template:
+    metadata: { labels: { app: trustsoc-web } }
+    spec:
+      securityContext: { runAsNonRoot: true, seccompProfile: { type: RuntimeDefault } }
+      containers:
+        - name: web
+          image: {{ .Values.image.web }}
+          ports: [{ containerPort: 3000 }]
+          resources: {{- toYaml .Values.resources.web | nindent 12 }}
+          securityContext: { allowPrivilegeEscalation: false, readOnlyRootFilesystem: true, capabilities: { drop: ["ALL"] } }

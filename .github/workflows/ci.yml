@@ -1,0 +1,41 @@
+name: CI
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    env:
+      TRUSTSOC_JWT_SECRET: "ci-test-jwt-secret-1234567890-abcdef"
+      TRUSTSOC_ENCRYPTION_KEY: "ci-test-encryption-key-1234567890-abcdef"
+      TRUSTSOC_BOOTSTRAP_ADMIN_PASSWORD: "CI-Test-Admin-Password-2026!"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install -r apps/api/requirements.txt
+      - run: ruff check apps/api agents/collector
+      - run: pytest -q
+        working-directory: apps/api
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: "22" }
+      - run: npm ci
+        working-directory: apps/web
+      - run: npm run typecheck
+        working-directory: apps/web
+      - run: npm run build
+        working-directory: apps/web
+  containers:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: cp .env.example .env
+      - run: docker compose config
+      - run: docker build -t trustsoc-api:test apps/api
+      - run: docker build -t trustsoc-web:test apps/web

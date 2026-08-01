@@ -1,0 +1,21 @@
+replicaCount: 2
+image:
+  api: trustsoc/api:0.1.0
+  web: trustsoc/web:0.1.0
+service:
+  type: ClusterIP
+  apiPort: 8000
+  webPort: 3000
+resources:
+  api:
+    requests: { cpu: 250m, memory: 256Mi }
+    limits: { cpu: "1", memory: 1Gi }
+  web:
+    requests: { cpu: 100m, memory: 128Mi }
+    limits: { cpu: 500m, memory: 512Mi }
+externalSecrets:
+  enabled: true
+postgresql:
+  external: true
+redis:
+  external: true

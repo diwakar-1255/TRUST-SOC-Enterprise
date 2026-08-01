@@ -1,0 +1,6 @@
+apiVersion: v2
+name: trust-soc
+description: TRUST-SOC enterprise control plane
+version: 0.1.0
+appVersion: "0.1.0"
+type: application

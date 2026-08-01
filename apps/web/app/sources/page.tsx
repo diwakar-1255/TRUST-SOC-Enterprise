@@ -1,0 +1,3 @@
+"use client";
+import { useEffect,useState } from "react";import Shell from "@/components/Shell";import { Source,request } from "@/lib/api";
+export default function Page(){const[s,setS]=useState<Source[]>([]);useEffect(()=>{request<Source[]>("/sources").then(setS)},[]);return <Shell><div className="header"><div><h1>Telemetry sources</h1><p className="subtitle">Registered collectors, expected heartbeats and current trust.</p></div></div><div className="card"><table><thead><tr><th>Name</th><th>Type</th><th>Status</th><th>Trust score</th></tr></thead><tbody>{s.map(x=><tr key={x.id}><td>{x.name}</td><td>{x.source_type}</td><td><span className={`badge ${x.status}`}>{x.status}</span></td><td>{x.trust_score}</td></tr>)}</tbody></table></div></Shell>}

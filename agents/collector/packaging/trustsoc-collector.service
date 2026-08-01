@@ -1,0 +1,21 @@
+[Unit]
+Description=TRUST-SOC Signed Telemetry Collector
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/opt/trustsoc-collector
+EnvironmentFile=/etc/trustsoc/agent.env
+ExecStart=/opt/trustsoc-collector/.venv/bin/python -m trust_agent.main
+Restart=always
+RestartSec=5
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/trustsoc-collector/runtime
+
+[Install]
+WantedBy=multi-user.target

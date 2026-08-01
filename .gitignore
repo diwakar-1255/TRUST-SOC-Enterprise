@@ -1,0 +1,118 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual Environment
+.venv/
+venv/
+
+# Node
+node_modules/
+.next/
+npm-debug.log
+
+# Docker
+*.log
+
+# IDE
+.vscode/
+.idea/
+
+# Environment
+.env
+.env.*
+
+# Database
+*.db
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build
+dist/
+build/
+
+# Cache
+.pytest_cache/
+.coverage.env
+.env.*
+!.env.example
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.venv/
+node_modules/
+.next/
+dist/
+build/
+coverage/
+*.log
+.DS_Store
+secrets/*
+!secrets/.gitkeep
+vendor/
+backups/*
+!backups/.gitkeep
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+secrets/
+backups/
+
+# Private keys and certificates
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Logs and archives
+*.log
+*.zip
+*.tar
+*.tar.gz
+
+# Dependencies and temporary files
+**/node_modules/
+**/__pycache__/
+**/.venv/
+.DS_Store
+
+# Collector credentials and runtime data
+agents/collector/agent.env
+agents/collector/runtime/
+*.pid
+*.jsonl
+
+# Backup and temporary files
+*.bak
+*.backup
+*.backup-*
+*.tsbuildinfo
+
+# Python generated files
+*.pyc
+.pytest_cache/
+
+# Application build directories
+.next/
+dist/
+build/
+
+# Local collector configuration
+agents/collector/agent.env
+agents/collector/runtime/
+
+# Generated and backup files
+*.bak
+*.backup
+*.backup-*
+*.tsbuildinfo

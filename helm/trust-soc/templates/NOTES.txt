@@ -1,0 +1,1 @@
+TRUST-SOC installed. Configure ingress, External Secrets, PostgreSQL, Redis, TLS and network policies before use.
